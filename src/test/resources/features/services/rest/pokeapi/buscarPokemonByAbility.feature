@@ -1,4 +1,7 @@
 Feature: buscar porkemos por habilidad
+  Yo como maestro pokemón
+  quiero poder consultar los pokemones por habilidades
+  para formar los mejores equipos de batalla
 
   Scenario Outline: busqueda de pokemones por habilidades
       When el maestro pokemón ejecute la petición con la habilidad "<ability>"  para buscar pokemones
