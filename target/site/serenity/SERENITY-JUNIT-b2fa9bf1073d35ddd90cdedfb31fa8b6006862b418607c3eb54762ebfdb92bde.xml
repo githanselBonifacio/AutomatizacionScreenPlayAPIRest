@@ -1,1 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="0" name="crear usuarios" skipped="0" tests="2" time="10.09" timestamp="2022-01-04 07:02:43"><testcase name="creación de usuario exitoso"/><testcase name="error en petición"/></testsuite>
