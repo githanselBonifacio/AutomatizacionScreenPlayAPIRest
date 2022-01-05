@@ -1,0 +1,50 @@
+{ "pokemon": [
+  {
+    "is_hidden": false,
+    "pokemon": {
+      "name": "wobbuffet",
+      "url": "https://pokeapi.co/api/v2/pokemon/202/"
+    },
+    "slot": 1
+  },
+  {
+    "is_hidden": false,
+    "pokemon": {
+      "name": "wynaut",
+      "url": "https://pokeapi.co/api/v2/pokemon/360/"
+    },
+    "slot": 1
+  },
+  {
+    "is_hidden": true,
+    "pokemon": {
+      "name": "gothita",
+      "url": "https://pokeapi.co/api/v2/pokemon/574/"
+    },
+    "slot": 3
+  },
+  {
+    "is_hidden": true,
+    "pokemon": {
+      "name": "gothorita",
+      "url": "https://pokeapi.co/api/v2/pokemon/575/"
+    },
+    "slot": 3
+  },
+  {
+    "is_hidden": true,
+    "pokemon": {
+      "name": "gothitelle",
+      "url": "https://pokeapi.co/api/v2/pokemon/576/"
+    },
+    "slot": 3
+  },
+  {
+    "is_hidden": false,
+    "pokemon": {
+      "name": "gengar-mega",
+      "url": "https://pokeapi.co/api/v2/pokemon/10038/"
+    },
+    "slot": 1
+  }
+]}

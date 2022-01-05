@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>busqueda de pokemones por habilidades</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<!--[if IE 7]>
+<!--<link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css">-->
+
+<link rel="stylesheet" type="text/css" href="fontawesome-free-5.7.2-web/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="fontawesome-free-5.7.2-web/css/v4-shims.min.css">
+
+<!-- JQuery -->
+<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script><link rel="stylesheet" type="text/css" href="chartist/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.css">
+<link rel="stylesheet" type="text/css" href="chartist/dist/chartist.min.css">
+<script src="chartist/dist/chartist.min.js"></script>
+<script src="chartist/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
+<!-- Required Stylesheets -->
+<link href="bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+
+<!-- Required Javascript -->
+<script src="bootstrap-treeview/dist/bootstrap-treeview.min.js"></script><!-- DataTables -->
+<link type="text/css" href="datatables/1.10.20/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.10.20/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.10.20/time-elapsed-dhms.js"></script>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="datatables/1.10.20/datatables.bootstrap4.min.js"></script>
+<link type="text/css" href="datatables/1.10.20/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
+<link rel="stylesheet" href="css/core.css"/>
+<link rel="stylesheet" href="css/link.css"/>
+<link type="text/css" media="screen" href="css/screen.css" rel="Stylesheet"/><!-- JQuery-UI -->
+<link type="text/css" href="jqueryui/1.11.2-start/jquery-ui.min.css" rel="Stylesheet" />
+<script type="text/javascript" src="jqueryui/1.11.2-start/jquery-ui.min.js"></script><!-- DataTables -->
+<link type="text/css" href="datatables/1.10.20/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.10.20/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.10.20/time-elapsed-dhms.js"></script>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="datatables/1.10.20/datatables.bootstrap4.min.js"></script>
+<link type="text/css" href="datatables/1.10.20/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
+<!-- ImgPreview -->
+<script src="scripts/imgpreview.full.jquery.js" type="text/javascript"></script>
+</head>
+
+<body class="results-page">
+
+
+<div id="topheader">
+    <div id="topbanner">
+        <div id="logo"><a href="index.html"><img src="images/serenity-logo.png" border="0"/></a></div>
+        <div id="projectname-banner" style="float:right">
+            <span class="projectname">
+                <span class="projecttitle"></span>
+                <span class="projectsubtitle"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="middlecontent">
+    <div id="contenttop">
+        <div class="middlebg">
+        <span class="breadcrumbs">
+            <a href="index.html" class="breadcrumbs">Home</a>
+
+            > <a href="47be599138d49cad804262616f2b40173251ed93866920a91a448a13e1fe1ac7.html">Services</a>
+            > <a href="6193340c8e2a0e4549e99ebf96a7a9524bcc3fa7a8576d2d0c0b38a3d0363aab.html">Rest</a>
+            > <a href="6d312a350f938ea4a393999b7621467b84645d5b1be7ee97b26efc7304b8d506.html">Pokeapi</a>
+            > <a href="c9eea035942070f4745c352130577813511acd82c02e78bd58515d99a123dfce.html">Buscar Porkemos Por Habilidad</a>
+        > busqueda de pokemones por habilidades
+        </span>
+        </div>
+        <div class="rightbg"></div>
+    </div>
+
+    <div class="clr"></div>
+
+    <!--/* starts second table*/-->
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#"><i class="fa fa-check-square-o"></i> Overall Test Results</a>
+        </li>
+        <li >
+            <a href="capabilities.html"><i class="fa fa-book"></i> Requirements</a>
+        </li>
+        <li >
+            <a href="dafb266f68444cb7f2451c923d70c1428ac45470c361842b818e6daa9bcd4fa8.html"><i class="fa fa-comments-o"></i> Themes</a>
+        </li>
+        <li >
+            <a href="576946480b52ad056d6f5bddf874399c83582ecf90963cc074a14c70580e7d9f.html"><i class="fa fa-comments-o"></i> Features</a>
+        </li>
+    </ul>
+    <span class="date-and-time"><a href="build-info.html"><i class="fa fa-info-circle"></i></a> Report generated 04-01-2022 16:42</span>
+    <br style="clear:left"/>
+</div>
+    <div class="clr"></div>
+
+
+    <div id="contentbody">
+        <div class="titlebar">
+            <div class="story-title">
+                <table class="outcome-header">
+                    <tr>
+                        <td>
+                                <div>
+                                    <h3 class="discreet-story-header">
+                                        <i class="fa fa-2x fa-comments-o"></i>
+                                        <span class="story-header-title">Buscar Porkemos Por Habilidad </span>
+                                    </h3>
+
+                                </div>
+
+                        </td>
+                        <td valign="top">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="story-title">
+                <table class="outcome-header">
+                    <tr>
+                        <td colspan="2" class="test-title-bar">
+                            <span class="outcome-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon fa-2x' title='SUCCESS'></i></a></span>
+                            <span class="test-case-title">
+                                <span class="success-color">
+                                    busqueda de pokemones por habilidades
+                                        <span class="related-issue-title"></span>
+                                </span>
+                            </span>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+                <!-- CAST MEMBERS -->
+                <div>&nbsp;</div>
+                <div class="story-title">
+                    <table class="outcome-header">
+                        <tr>
+                            <td>
+                                <div>
+                                    <h3 class="discreet-story-header">
+                                        <i class="fa fa-2x fa-users"></i>
+                                        <span class="story-header-title">
+                                            <a class="btn btn-primary" data-toggle="collapse" href="#castDetails"
+                                               role="button" aria-expanded="true" aria-controls="castDetails">Cast</a>
+                                        </span>
+                                    </h3>
+
+                                    <div class="cast-member collapse" id="castDetails">
+                                        <table class="cast">
+                                            <tr>
+                                                    <td width="100%">
+                                                        <h4>
+                                                            <i class="fa fa-2x fa-user-o"></i>&nbsp;<span>USUARIO</span>
+                                                            <h4>
+                                                                <p></p>
+                                                                <ul>
+                                                                        <li><strong>USUARIO can:</strong>
+                                                                            <ul>
+                                                                                    <li>call an API at  https://pokeapi.co/api/v2/</li>
+                                                                            </ul>
+                                                                        </li>
+                                                                </ul>
+                                                    </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- END CAST MEMBERS -->
+
+
+        </div>
+    </div>
+
+    <div class="clr"></div>
+
+        <div class="story-title">
+            <h3 class="story-header">Scenario Outline</h3>
+
+            <div class="scenario">When el maestro pokemón ejecute la petición con la habilidad "&lt;ability&gt;"  para buscar pokemones<br>Then el maestro pokemón debería obtener los pokemones con la habilidad "&lt;ability&gt;"</div>
+
+        </div>
+
+    <div id="beforetable"></div>
+
+
+            <h3 class="story-header">Examples:&nbsp;</h3>
+
+
+                <p class="example-tag">
+                </p>
+
+            <div class="example-table test-report">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                            <th>Ability</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="test-SUCCESS"><a href="#0">1</a></td>
+                                <td class="test-SUCCESS"><a
+                                            href="#0">shadow-tag</a>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td class="test-SUCCESS"><a href="#1">2</a></td>
+                                <td class="test-SUCCESS"><a
+                                            href="#1">drought</a>
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+    <div id="tablecontents">
+        <div>
+            <table class="step-table">
+                <tr class="step-titles">
+                    <th width="65">
+                    </th>
+                    <th class="step-description-column greentext">
+                        Steps
+                    </th>
+
+                    <th width="130" class="greentext">Outcome</th>
+                    <th width="100" class="greentext"><i title="Duration" class="far fa-clock"></i></th>
+                </tr>
+                <tr class="step-table-separator">
+                    <td colspan="5"></td>
+                </tr>
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="50" class="step-icon">
+                            <a name="0"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection0 success-icon"
+                                       style="margin-left: 20px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0')"
+                                   style="display:block;">
+                                    <span class="top-level-step">
+                                                Example: {ability=shadow-tag}
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                        <td width="100"><span class="top-level-step">8.07s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection0" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="70" class="step-icon">
+                            <a name="0-0"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-0')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection0-0 success-icon"
+                                       style="margin-left: 40px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-0')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                When el maestro pokemón ejecute la petición con la habilidad "shadow-tag"  para buscar pokemones
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">6.93s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection0-0" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="90" class="step-icon">
+                            <a name="0-0-0"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-0-0')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection0-0-0 success-icon"
+                                       style="margin-left: 60px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-0-0')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                Usuario do get
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">6.27s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection0-0-0" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="110" class="step-icon">
+                            <a name="0-0-0-0"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-0-0-0')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection0-0-0-0 success-icon"
+                                       style="margin-left: 80px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-0-0-0')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                USUARIO executes a GET on the resource ability/shadow-tag
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">6.15s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection0-0-0-0" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="130" class="step-icon">
+                            <a name="0-0-0-0-0"></a>
+                                <span style="margin-left: 100px;"
+                                      class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="nested-group-step">
+                                                GET https://pokeapi.co/api/v2/ability/shadow-tag
+                                        </span>
+                                <span class="evidence">
+                                        <span class="piece-of-evidence">
+                    <span>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="collapse"
+                                data-target="#restModal-REST-5">
+                            REST Query
+                        </button>
+                    </span>
+                    <!-- Modal -->
+                    <div class="rest-query-details">
+                        <div class="collapse multi-collapse" id="restModal-REST-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Response</h4>
+                                        <p>Status code: 200</p>
+                                        <p>Content Type: application/json</p>
+                                        <h4>Request Headers</h4>
+                                        <pre>Accept=*/*<br>Content-Type=application/json; charset=UTF-8</pre>
+                                        <h4>Request Cookies</h4>
+                                        <pre></pre>
+                                        <h4>Response Headers</h4>
+                                        <pre>Date: Tue, 04 Jan 2022 21:42:37 GMT<br>Content-Type: application/json; charset=utf-8<br>Content-Length: 2039<br>Connection: keep-alive<br>access-control-allow-origin: *<br>cache-control: public, max-age=86400, s-maxage=86400<br>content-encoding: gzip<br>etag: W/&quot;4a07-K1oIRKKGA2bWxOgdZPrIV6QcEvY&quot;<br>function-execution-id: twni2ftkcoyr<br>x-cloud-trace-context: 0e07a86ef124d409baa120382213f5c9<br>x-country-code: US<br>x-fh-no-setcookie-unroll: true<br>x-powered-by: Express<br>x-served-by: cache-pdk17870-PDK<br>x-cache: MISS<br>x-cache-hits: 0<br>x-timer: S1641328654.001387,VS0,VE2551<br>vary: Accept-Encoding,cookie,need-authorization, x-fh-requested-host, accept-encoding<br>CF-Cache-Status: HIT<br>Age: 3901<br>Accept-Ranges: bytes<br>Expect-CT: max-age=604800, report-uri=&quot;https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct&quot;<br>Report-To: {&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https:\/\/a.nel.cloudflare.com\/report\/v3?s=%2FnTDTaLltSVF9gVmwtR5HGAFfjgolJFKvJQ87ICXd%2BuX0I3%2Bxp8QbijKN5dSHlSa3364PImivXeKS4J8xOd8rUQRwjUVtl9mVct4Eg5XQgVzIY%2FmGdpfmLmyrCUa&quot;}],&quot;group&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>NEL: {&quot;success_fraction&quot;:0,&quot;report_to&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>Server: cloudflare<br>CF-RAY: 6c87a347591e63e0-ATL<br>alt-svc: h3=&quot;:443&quot;; ma=86400, h3-29=&quot;:443&quot;; ma=86400, h3-28=&quot;:443&quot;; ma=86400, h3-27=&quot;:443&quot;; ma=86400</pre>
+                                    <h4>Response Body</h4>
+                                        <pre>{<br>    &quot;effect_changes&quot;: [<br>        {<br>            &quot;effect_entries&quot;: [<br>                {<br>                    &quot;effect&quot;: &quot;Betrifft andere Pokémon mit dieser Fähigkeit.&quot;,<br>                    &quot;language&quot;: {<br>                        &quot;name&quot;: &quot;de&quot;,<br>                        &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>                    }<br>                },<br>                {<br>                    &quot;effect&quot;: &quot;Affects other Pokémon with this ability.&quot;,<br>                    &quot;language&quot;: {<br>                        &quot;name&quot;: &quot;en&quot;,<br>                        &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>                    }<br>                }<br>            ],<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;diamond-pearl&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/8/&quot;<br>            }<br>        }<br>    ],<br>    &quot;effect_entries&quot;: [<br>        {<br>            &quot;effect&quot;: &quot;Während ein Pokémon mit dieser Fähigkeit im Kampf ist, kann der Gegner nicht fliehen oder ausgetauscht werden.\n\nAndere Pokémon mit derselben Fähigkeit sind nicht betroffen. Pokémon mit run away können trotzdem fliehen. Pokémon können mit bestimmten Items oder Attacken ausgetauscht werden.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;short_effect&quot;: &quot;Verhindert, dass der Gegner flieht oder ausgetauscht wird.&quot;<br>        },<br>        {<br>            &quot;effect&quot;: &quot;While this Pokémon is in battle, opposing Pokémon cannot flee or switch out.\n\nOther Pokémon with this ability are unaffected.  Pokémon with run away can still flee.  Pokémon can still switch out with the use of a move or item.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;short_effect&quot;: &quot;Prevents opponents from fleeing or switching out.&quot;<br>        }<br>    ],<br>    &quot;flavor_text_entries&quot;: [<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe’s escape.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ruby-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/5/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe’s escape.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;emerald&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/6/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe’s escape.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;firered-leafgreen&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/7/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe from\nescaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;diamond-pearl&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/8/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe from\nescaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;platinum&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/9/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe from\nescaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;heartgold-soulsilver&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/10/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Empêche le Pokémon ennemi\nde quitter le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;black-white&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/11/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe from\nescaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;black-white&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/11/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents the foe from\nescaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;black-2-white-2&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/14/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;あいての　かげをふみ\nにげられなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;상대의 그림자를 밟아\n도망칠 수 없게 한다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Empêche le Pokémon ennemi de\nquitter le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Hindert Gegner an der Flucht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Evita que el enemigo huya.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Impedisce la fuga al nemico.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents opposing Pokémon\nfrom escaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;相手の　影をふみ\n逃げられなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;あいての　かげをふ \nにげられなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;상대의 그림자를 밟아\n도망칠 수 없게 한다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Empêche le Pokémon ennemi de\nquitter le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Hindert Gegner an der Flucht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Evita que el enemigo huya.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Impedisce la fuga al nemico.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Prevents opposing Pokémon\nfrom escaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;相手の　影をふ \n逃げられなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;あいての　かげを　ふみ\nにげたり　こうたい　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;상대의 그림자를 밟아\n도망치거나 교체할 수 없게 한다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住對手的影子\n使其無法逃走或替換。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Empêche le Pokémon ennemi de quitter le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Hindert den Gegner an der Flucht beziehungsweise\nam Auswechseln, indem es ihm den Weg versperrt.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Evita que el enemigo huya o sea cambiado por otro.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Calpesta l’ombra del nemico impedendogli la fuga\no la sostituzione.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;This Pokémon steps on the opposing Pokémon’s\nshadow to prevent it from escaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;相手の　影を　踏み\n逃げたり　交代　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住对手的影子\n使其无法逃走或替换。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;あいての　かげを　ふみ\nにげたり　こうたい　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;상대의 그림자를 밟아\n도망치거나 교체할 수 없게 한다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住對手的影子\n使其無法逃走或替換。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Empêche le Pokémon ennemi de quitter le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Hindert den Gegner an der Flucht beziehungsweise\nam Auswechseln, indem es ihm den Weg versperrt.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Evita que el enemigo huya o sea cambiado por otro.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Calpesta l’ombra del nemico impedendogli la fuga\no la sostituzione.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;This Pokémon steps on the opposing Pokémon’s\nshadow to prevent it from escaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;相手の　影を　踏み\n逃げたり　交代　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住对手的影子\n使其无法逃走或替换。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;あいての　かげを　ふみ\nにげたり　こうたい　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;상대의 그림자를 밟아\n도망치거나 교체할 수 없게 한다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住對手的影子\n使其無法逃走或替換。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Empêche le Pokémon ennemi de quitter le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Hindert den Gegner an der Flucht beziehungsweise\nam Auswechseln, indem es ihm den Weg versperrt.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Evita que el enemigo huya o sea cambiado por otro.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Calpesta l’ombra del nemico impedendogli la fuga\no la sostituzione.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;This Pokémon steps on the opposing Pokémon’s\nshadow to prevent it from escaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;相手の　影を　踏み\n逃げたり　交代　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住对手的影子\n使其无法逃走或替换。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;あいての　かげを　ふみ\nにげたり　こうたい　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;상대의 그림자를 밟아\n도망치거나 교체할 수 없게 한다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住對手的影子\n使其無法逃走或替換。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Empêche les Pokémon ennemis de quitter le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Hindert Gegner an der Flucht beziehungsweise am\nAuswechseln, indem es ihnen den Weg versperrt.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Impide que el enemigo huya o sea cambiado por otro.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Il Pokémon calpesta l’ombra del nemico impedendogli\nla fuga o la sostituzione.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;This Pokémon steps on the opposing Pokémon’s\nshadow to prevent it from escaping.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;相手の　影を　踏み\n逃げたり　交代　できなくする。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;踩住对手的影子\n使其无法逃走或替换。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        }<br>    ],<br>    &quot;generation&quot;: {<br>        &quot;name&quot;: &quot;generation-iii&quot;,<br>        &quot;url&quot;: &quot;https://pokeapi.co/api/v2/generation/3/&quot;<br>    },<br>    &quot;id&quot;: 23,<br>    &quot;is_main_series&quot;: true,<br>    &quot;name&quot;: &quot;shadow-tag&quot;,<br>    &quot;names&quot;: [<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;name&quot;: &quot;かげふみ&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;name&quot;: &quot;그림자밟기&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;name&quot;: &quot;踩影&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;name&quot;: &quot;Marque Ombre&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;name&quot;: &quot;Wegsperre&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;name&quot;: &quot;Sombra Trampa&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;name&quot;: &quot;Pedinombra&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;name&quot;: &quot;Shadow Tag&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;name&quot;: &quot;かげふみ&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;name&quot;: &quot;踩影&quot;<br>        }<br>    ],<br>    &quot;pokemon&quot;: [<br>        {<br>            &quot;is_hidden&quot;: false,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;wobbuffet&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/202/&quot;<br>            },<br>            &quot;slot&quot;: 1<br>        },<br>        {<br>            &quot;is_hidden&quot;: false,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;wynaut&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/360/&quot;<br>            },<br>            &quot;slot&quot;: 1<br>        },<br>        {<br>            &quot;is_hidden&quot;: true,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;gothita&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/574/&quot;<br>            },<br>            &quot;slot&quot;: 3<br>        },<br>        {<br>            &quot;is_hidden&quot;: true,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;gothorita&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/575/&quot;<br>            },<br>            &quot;slot&quot;: 3<br>        },<br>        {<br>            &quot;is_hidden&quot;: true,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;gothitelle&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/576/&quot;<br>            },<br>            &quot;slot&quot;: 3<br>        },<br>        {<br>            &quot;is_hidden&quot;: false,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;gengar-mega&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/10038/&quot;<br>            },<br>            &quot;slot&quot;: 1<br>        }<br>    ]<br>}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                        </span>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-group-step">0s</span></td>
+                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                    <tr class="test-SUCCESS">
+
+                        <td width="70" class="step-icon">
+                            <a name="0-1"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-1')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection0-1 success-icon"
+                                       style="margin-left: 40px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0-1')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                Then el maestro pokemón debería obtener los pokemones con la habilidad "shadow-tag"
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">1.04s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection0-1" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="90" class="step-icon">
+                            <a name="0-1-0"></a>
+                                <span style="margin-left: 60px;"
+                                      class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="nested-group-step">
+                                                El c&oacute;digo de rspuesta HTTP debe ser:
+                                        </span>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-group-step">0.83s</span></td>
+                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                    <tr class="test-SUCCESS">
+
+                        <td width="50" class="step-icon">
+                            <a name="1"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection1 success-icon"
+                                       style="margin-left: 20px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1')"
+                                   style="display:block;">
+                                    <span class="top-level-step">
+                                                Example: {ability=drought}
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                        <td width="100"><span class="top-level-step">0.62s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection1" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="70" class="step-icon">
+                            <a name="1-0"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-0')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection1-0 success-icon"
+                                       style="margin-left: 40px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-0')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                When el maestro pokemón ejecute la petición con la habilidad "drought"  para buscar pokemones
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">0.53s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection1-0" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="90" class="step-icon">
+                            <a name="1-0-0"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-0-0')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection1-0-0 success-icon"
+                                       style="margin-left: 60px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-0-0')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                Usuario do get
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">0.51s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection1-0-0" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="110" class="step-icon">
+                            <a name="1-0-0-0"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-0-0-0')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection1-0-0-0 success-icon"
+                                       style="margin-left: 80px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-0-0-0')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                USUARIO executes a GET on the resource ability/drought
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">0.5s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection1-0-0-0" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="130" class="step-icon">
+                            <a name="1-0-0-0-0"></a>
+                                <span style="margin-left: 100px;"
+                                      class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="nested-group-step">
+                                                GET https://pokeapi.co/api/v2/ability/drought
+                                        </span>
+                                <span class="evidence">
+                                        <span class="piece-of-evidence">
+                    <span>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="collapse"
+                                data-target="#restModal-REST-12">
+                            REST Query
+                        </button>
+                    </span>
+                    <!-- Modal -->
+                    <div class="rest-query-details">
+                        <div class="collapse multi-collapse" id="restModal-REST-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Response</h4>
+                                        <p>Status code: 200</p>
+                                        <p>Content Type: application/json</p>
+                                        <h4>Request Headers</h4>
+                                        <pre>Accept=*/*<br>Content-Type=application/json; charset=UTF-8</pre>
+                                        <h4>Request Cookies</h4>
+                                        <pre></pre>
+                                        <h4>Response Headers</h4>
+                                        <pre>Date: Tue, 04 Jan 2022 21:42:39 GMT<br>Content-Type: application/json; charset=utf-8<br>Content-Length: 2178<br>Connection: keep-alive<br>access-control-allow-origin: *<br>cache-control: public, max-age=86400, s-maxage=86400<br>content-encoding: gzip<br>etag: W/&quot;485c-IoFVY1Iw3wU5ufSQJC2/Qu7UEOU&quot;<br>function-execution-id: ghej1ihgkstj<br>x-cloud-trace-context: 48be9932e97f8ee5f0cf04f5b3da5ff5<br>x-country-code: US<br>x-fh-no-setcookie-unroll: true<br>x-powered-by: Express<br>x-served-by: cache-pdk17846-PDK<br>x-cache: HIT<br>x-cache-hits: 1<br>x-timer: S1641328659.285712,VS0,VE1<br>vary: Accept-Encoding,cookie,need-authorization, x-fh-requested-host, accept-encoding<br>CF-Cache-Status: HIT<br>Age: 3900<br>Accept-Ranges: bytes<br>Expect-CT: max-age=604800, report-uri=&quot;https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct&quot;<br>Report-To: {&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https:\/\/a.nel.cloudflare.com\/report\/v3?s=Whik9dGWaFMh%2FO2Sx%2BolWs1mWovrbu3AP%2B6O4CG9Yl0G7CXSHhqf%2BJGs9Emq9ekAoPipOhqoT3ogwh4X7PFrYyihffTub8ChJJmdTzMSMrWpA0TBZ%2Fobk7h%2FsdaT&quot;}],&quot;group&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>NEL: {&quot;success_fraction&quot;:0,&quot;report_to&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>Server: cloudflare<br>CF-RAY: 6c87a3527e4f1050-ATL<br>alt-svc: h3=&quot;:443&quot;; ma=86400, h3-29=&quot;:443&quot;; ma=86400, h3-28=&quot;:443&quot;; ma=86400, h3-27=&quot;:443&quot;; ma=86400</pre>
+                                    <h4>Response Body</h4>
+                                        <pre>{<br>    &quot;effect_changes&quot;: [<br>        <br>    ],<br>    &quot;effect_entries&quot;: [<br>        {<br>            &quot;effect&quot;: &quot;Das weather ändert sich zu starkem Sonnenlicht wenn ein Pokémon mit dieser Fähigkeit den Kampf betritt. Dieser Effekt ist dauerhaft bis das weather geändert wird.\n\nWenn mehrere Pokémon mit dieser Fähigkeit, drizzle, sand stream oder snow warning zur selben Zeit den Kampf betreten, werden die Fähigkeiten nach Reihenfolge der speed der Pokémon ausgelöst, unter Berücksichtigung von trick room.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;short_effect&quot;: &quot;Ändert beim Betreten des Kampfes das weather in starkes Sonnenlicht.&quot;<br>        },<br>        {<br>            &quot;effect&quot;: &quot;The weather changes to strong sunlight when this Pokémon enters battle and does not end unless cancelled by another weather condition.\n\nIf multiple Pokémon with this ability, drizzle, sand stream, or snow warning are sent out at the same time, the abilities will activate in order of Speed, respecting trick room.  Each ability's weather will cancel the previous weather, and only the weather summoned by the slowest of the Pokémon will stay.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;short_effect&quot;: &quot;Summons strong sunlight that lasts indefinitely upon entering battle.&quot;<br>        }<br>    ],<br>    &quot;flavor_text_entries&quot;: [<br>        {<br>            &quot;flavor_text&quot;: &quot;Summons sunlight in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ruby-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/5/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Summons sunlight in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;emerald&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/6/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Summons sunlight in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;firered-leafgreen&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/7/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;The Pokémon makes it\nsunny if it is in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;diamond-pearl&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/8/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;The Pokémon makes it\nsunny if it is in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;platinum&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/9/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;The Pokémon makes it\nsunny if it is in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;heartgold-soulsilver&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/10/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Intensifie les rayons du\nsoleil pendant le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;black-white&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/11/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh\nif it is in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;black-white&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/11/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh\nif it is in battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;black-2-white-2&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/14/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;せんとうに　でると\nひざしが　つよくなる。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;배틀에 나가면\n햇살이 강해진다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Le soleil se met à briller quand\nce Pokémon rejoint le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Erzeugt im Kampf gleißendes\nSonnenlicht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;El sol sale si el Pokémon entra en\ncombate.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Il sole brilla intensamente quando\nil Pokémon entra in campo.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh when\nthe Pokémon enters a battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;戦闘に　でると\n日差しが　強くなる。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;x-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/15/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;せんとうに　でると\nひざしが　つよくなる。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;배틀에 나가면\n햇살이 강해진다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Le soleil se met à briller quand\nce Pokémon rejoint le combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Erzeugt im Kampf gleißendes\nSonnenlicht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;El sol sale si el Pokémon entra en\ncombate.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Il sole brilla intensamente quando \nil Pokémon entra in campo.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh when\nthe Pokémon enters a battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;戦闘に　でると\n日差しが　強くなる。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;omega-ruby-alpha-sapphire&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/16/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;とうじょう　したときに\nてんきを　はれに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;등장했을 때\n날씨를 맑음으로 만든다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出場時，\n會將天氣變為晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Le soleil se met à briller quand le Pokémon\nentre au combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Erzeugt bei Kampfantritt gleißendes Sonnenlicht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Cuando el Pokémon entra en combate, el tiempo pasa\na ser soleado.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Quando il Pokémon entra in campo, la luce solare\ndiventa intensa.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh when the Pokémon enters\na battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;登場　したときに\n天気を　晴れに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出场时，\n会将天气变为晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sun-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/17/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;とうじょう　したときに\nてんきを　はれに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;등장했을 때\n날씨를 맑음으로 만든다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出場時，\n會將天氣變為晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Le soleil se met à briller quand le Pokémon\nentre au combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Erzeugt bei Kampfantritt gleißendes Sonnenlicht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Cuando el Pokémon entra en combate, el tiempo pasa\na ser soleado.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Quando il Pokémon entra in campo, la luce solare\ndiventa intensa.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh when the Pokémon enters\na battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;登場　したときに\n天気を　晴れに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出场时，\n会将天气变为晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;ultra-sun-ultra-moon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/18/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;とうじょう　したときに\nてんきを　はれに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;등장했을 때\n날씨를 맑음으로 만든다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出場時，\n會將天氣變為晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Le soleil se met à briller quand le Pokémon\nentre au combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Erzeugt bei Kampfantritt gleißendes Sonnenlicht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Cuando el Pokémon entra en combate, el tiempo pasa\na ser soleado.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Quando il Pokémon entra in campo, la luce solare\ndiventa intensa.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh when the Pokémon enters\na battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;登場　したときに\n天気を　晴れに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出场时，\n会将天气变为晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;lets-go-pikachu-lets-go-eevee&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/19/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;とうじょう　したときに\nてんきを　はれに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;등장했을 때\n날씨를 맑음으로 만든다.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出場時，\n會將天氣變為晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Le soleil se met à briller quand le Pokémon\nentre au combat.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Erzeugt bei Kampfantritt gleißendes Sonnenlicht.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Cuando entra en combate, el tiempo pasa a ser\nsoleado.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Quando il Pokémon entra in campo, la luce solare\ndiventa intensa.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;Turns the sunlight harsh when the Pokémon enters\na battle.&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;登場　したときに\n天気を　晴れに　する。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        },<br>        {<br>            &quot;flavor_text&quot;: &quot;出场时，\n会将天气变为晴朗。&quot;,<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;version_group&quot;: {<br>                &quot;name&quot;: &quot;sword-shield&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/version-group/20/&quot;<br>            }<br>        }<br>    ],<br>    &quot;generation&quot;: {<br>        &quot;name&quot;: &quot;generation-iii&quot;,<br>        &quot;url&quot;: &quot;https://pokeapi.co/api/v2/generation/3/&quot;<br>    },<br>    &quot;id&quot;: 70,<br>    &quot;is_main_series&quot;: true,<br>    &quot;name&quot;: &quot;drought&quot;,<br>    &quot;names&quot;: [<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja-Hrkt&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/1/&quot;<br>            },<br>            &quot;name&quot;: &quot;ひでり&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ko&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/3/&quot;<br>            },<br>            &quot;name&quot;: &quot;가뭄&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hant&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/4/&quot;<br>            },<br>            &quot;name&quot;: &quot;日照&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;fr&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/5/&quot;<br>            },<br>            &quot;name&quot;: &quot;Sécheresse&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;de&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/6/&quot;<br>            },<br>            &quot;name&quot;: &quot;Dürre&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;es&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/7/&quot;<br>            },<br>            &quot;name&quot;: &quot;Sequía&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;it&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/8/&quot;<br>            },<br>            &quot;name&quot;: &quot;Siccità&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;en&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/9/&quot;<br>            },<br>            &quot;name&quot;: &quot;Drought&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;ja&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/11/&quot;<br>            },<br>            &quot;name&quot;: &quot;ひでり&quot;<br>        },<br>        {<br>            &quot;language&quot;: {<br>                &quot;name&quot;: &quot;zh-Hans&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/language/12/&quot;<br>            },<br>            &quot;name&quot;: &quot;日照&quot;<br>        }<br>    ],<br>    &quot;pokemon&quot;: [<br>        {<br>            &quot;is_hidden&quot;: true,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;vulpix&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/37/&quot;<br>            },<br>            &quot;slot&quot;: 3<br>        },<br>        {<br>            &quot;is_hidden&quot;: true,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;ninetales&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/38/&quot;<br>            },<br>            &quot;slot&quot;: 3<br>        },<br>        {<br>            &quot;is_hidden&quot;: false,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;torkoal&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/324/&quot;<br>            },<br>            &quot;slot&quot;: 2<br>        },<br>        {<br>            &quot;is_hidden&quot;: false,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;groudon&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/383/&quot;<br>            },<br>            &quot;slot&quot;: 1<br>        },<br>        {<br>            &quot;is_hidden&quot;: false,<br>            &quot;pokemon&quot;: {<br>                &quot;name&quot;: &quot;charizard-mega-y&quot;,<br>                &quot;url&quot;: &quot;https://pokeapi.co/api/v2/pokemon/10035/&quot;<br>            },<br>            &quot;slot&quot;: 1<br>        }<br>    ]<br>}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                        </span>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-group-step">0s</span></td>
+                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                    <tr class="test-SUCCESS">
+
+                        <td width="70" class="step-icon">
+                            <a name="1-1"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-1')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection1-1 success-icon"
+                                       style="margin-left: 40px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1-1')"
+                                   style="display:block;">
+                                    <span class="nested-step">
+                                                Then el maestro pokemón debería obtener los pokemones con la habilidad "drought"
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-step">0.08s</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection1-1" class="step-table-nested" style="display:none;">
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="90" class="step-icon">
+                            <a name="1-1-0"></a>
+                                <span style="margin-left: 60px;"
+                                      class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="nested-group-step">
+                                                El c&oacute;digo de rspuesta HTTP debe ser:
+                                        </span>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-group-step">0.07s</span></td>
+                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                <tr class="test-SUCCESS">
+                        <td colspan="2"></td>
+                    <td width="130"><span class="top-level-step"><em>SUCCESS</em></span></td>
+                    <td width="100"><span class="top-level-step"><em>9.03s</em></span></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div id="beforefooter"></div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="version">Serenity BDD version 2.2.9</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function toggleDiv(divId) {
+            $("#" + divId).toggle();
+            var imgsrc = $(".img" + divId).attr('src');
+            if (imgsrc == 'images/plus.png') {
+                $(".img" + divId).attr("src", function () {
+                    return "images/minus.png";
+                });
+
+            } else {
+                $(".img" + divId).attr("src", function () {
+                    return "images/plus.png";
+                });
+            }
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        //<![CDATA[
+
+        $(document).ready(function () {
+            $('img.screenshot').imgPreview({
+                imgCSS: {
+                    width: '500px'
+                },
+                distanceFromCursor: {top: 10, left: -200}
+            });
+        });
+
+        //]]>
+    </script>
+    <div id="imgPreviewContainer" style="position: absolute; top: 612px; left: 355px; display: none; " class=""><img
+                src="" style="display: none; "></div>
+    <div id="imgPreviewContainer2" style="position: absolute; top: 925px; left: 320px; display: none; " class="">
+        <img style="width: 200px; display: none; " src=""></div>
+    <div id="imgPreviewWithStyles" style="position: absolute; top: 1272px; left: 321px; display: none; " class="">
+        <img style="height: 200px; opacity: 1; display: none; " src=""></div>
+    <div id="imgPreviewWithStyles2" style="display: none; position: absolute; "><img style="height: 200px; "></div>
+    <div id="imgPreviewWithStyles3" style="display: none; position: absolute; "><img style="height: 200px; "></div>
+
+</div>
+</body>
+</html>

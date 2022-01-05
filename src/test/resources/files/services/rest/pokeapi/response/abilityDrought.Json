@@ -1,0 +1,42 @@
+{"pokemon": [
+  {
+    "is_hidden": true,
+    "pokemon": {
+      "name": "vulpix",
+      "url": "https://pokeapi.co/api/v2/pokemon/37/"
+    },
+    "slot": 3
+  },
+  {
+    "is_hidden": true,
+    "pokemon": {
+      "name": "ninetales",
+      "url": "https://pokeapi.co/api/v2/pokemon/38/"
+    },
+    "slot": 3
+  },
+  {
+    "is_hidden": false,
+    "pokemon": {
+      "name": "torkoal",
+      "url": "https://pokeapi.co/api/v2/pokemon/324/"
+    },
+    "slot": 2
+  },
+  {
+    "is_hidden": false,
+    "pokemon": {
+      "name": "groudon",
+      "url": "https://pokeapi.co/api/v2/pokemon/383/"
+    },
+    "slot": 1
+  },
+  {
+    "is_hidden": false,
+    "pokemon": {
+      "name": "charizard-mega-y",
+      "url": "https://pokeapi.co/api/v2/pokemon/10035/"
+    },
+    "slot": 1
+  }
+]}
