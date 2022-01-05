@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class ServiceSetup {
     protected static final String URL_BASE = "https://reqres.in/";
     protected static final String LIST_RESOURCES = "api/unknown";
-    protected static final String CREATE_USER = "api/users";
+    protected static final String USER = "api/users";
 
     protected final Actor actor = new Actor("Usuario");
 

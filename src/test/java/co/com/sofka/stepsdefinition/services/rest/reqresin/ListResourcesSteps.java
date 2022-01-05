@@ -89,39 +89,4 @@ public class ListResourcesSteps extends ServiceSetup {
         }
     }
 
-    @When("el administrador del sistema ingrese {string} y {string} como nuevas credenciales")
-    public void elAdministradorDelSistemaIngreseYComoNuevasCredenciales(String name, String job) {
-        try {
-            super.setup();
-            actor.attemptsTo(
-                    doPost()
-                            .withTheResource(CREATE_USER)
-                            .andTheHeaders(super.headers())
-                            .andTheBodyRequest("{\"name\":\""+name+"\", \"job\":\""+job+"\"}")
-            );
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-            logger.warn("error petición\n" + e.getMessage());
-        }
-    }
-    @Then("se deberá mostrar como nombre {string} y {string} como trabajo con un ID asignado")
-    public void seDeberaMostrarComoNombreYComoTrabajoConUnIDAsignado(String name,String job ) {
-        try {
-            actor.should(
-                    seeThatResponse("El código de rspuesta HTTP debe ser: ",
-                            resp -> {
-                                resp.statusCode(HttpStatus.SC_CREATED);
-                                resp.body("name",equalTo(name));
-                                resp.body("job",equalTo(job));
-                                resp.body("id",notNullValue());
-                                resp.body("createdAt",notNullValue());
-
-                                logger.info("código de respuesta: "+resp.extract().statusCode());
-                            }
-                    ));
-        } catch (AssertionError e) {
-            logger.warn("Error en la validación\n" + e);
-            Assertions.fail(e.getMessage());
-        }
-    }
 }
