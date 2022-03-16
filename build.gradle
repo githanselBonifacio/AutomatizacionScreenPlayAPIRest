@@ -28,6 +28,9 @@ ext {
     serenityCucumberVersion = '2.2.6'
     apachePoiVersion = '3.17'
 }
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api',        version: junitVersion
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine',        version: junitVersion
@@ -39,7 +42,6 @@ dependencies {
     implementation group: 'net.serenity-bdd', name: 'serenity-assertions',           version: serenityVersion
     implementation group: 'net.serenity-bdd', name: 'serenity-ensure',               version: serenityVersion
     implementation group: 'net.serenity-bdd', name: 'serenity-screenplay-rest',      version: serenityVersion
-
     implementation group: 'net.serenity-bdd', name: 'serenity-cucumber5',            version: serenityCucumberVersion
 
     implementation group: 'log4j',            name: 'log4j',                         version: '1.2.17'
@@ -48,14 +50,10 @@ dependencies {
 
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.3'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.1'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.2'
 }
 serenity {
     reports = ["single-page-html"]
-}
-
-test {
-    useJUnitPlatform()
 }
 
 gradle.startParameter.continueOnFailure = true
