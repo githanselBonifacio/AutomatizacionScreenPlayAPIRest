@@ -1,4 +1,4 @@
-package co.com.sofka.runners.service.rest.reqresin;
+package co.com.sofka.runners.services.rest;
 
 import io.cucumber.junit.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
@@ -7,9 +7,8 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         snippets = CucumberOptions.SnippetType.CAMELCASE,
-        features = {"src/test/resources/features/services/rest/reqresin"},
-        glue = {"co.com.sofka.stepsdefinition.services.rest.reqresin"}
+        features = {"src/test/resources/features"},
+        glue = {"co.com.sofka.stepsdefinition.services.rest"}
 )
-public class ReqresinTest {
-
+public class Runner {
 }
